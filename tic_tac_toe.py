@@ -16,8 +16,6 @@ line_vertical = pygame.Surface((1, 600))
 filling_black(line_gorizontal)
 filling_black(line_vertical)
 
-
-
 #bg_sound = pygame.mixer.Sound('sounds/bg.mp3')
 #bg_sound.play()
 
@@ -35,14 +33,32 @@ def Tac(coordinates):
     end_pose_1   = (ed_coord_1, ed_coord_2)
     start_pose_2 = (st_coord_1, ed_coord_2)
     end_pose_2   = (ed_coord_1, st_coord_2)
-
     pygame.draw.line(surface=screen,color=(0, 0, 0), start_pos=start_pose_1, end_pos=end_pose_1)
     pygame.draw.line(surface=screen,color=(0, 0, 0), start_pos=start_pose_2, end_pos=end_pose_2)
 
+def coord_maker(j, i):
+    print(j, i)
+    if   j== 0 and i == 0:
+        return (100, 100)
+    elif j== 0 and i == 1:
+        return (300, 100)
+    elif j== 0 and i == 2:
+        return (500, 100)
+    elif j== 1 and i == 0:
+        return (100, 300)
+    elif j== 1 and i == 1:
+        return (300, 300)
+    elif j== 1 and i == 2:
+        return (500, 300)
+    elif j== 2 and i == 0:
+        return (100, 500)
+    elif j== 2 and i == 1:
+        return (300, 500)
+    elif j== 2 and i == 2:
+        return (500, 500)
 
-
-coordinate = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
-
+engaged = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+count = 1
 running = True
 while running:
     screen.fill((210,180,230))
@@ -52,7 +68,14 @@ while running:
     screen.blit(line_vertical, (200, 0))
     screen.blit(line_vertical, (400, 0))
     
-    count = 1
+    count_i = -1
+    for i in engaged:
+        count_i += 1
+        count_j = -1
+        for j in i:
+            count_j += 1
+            if j == 1:
+                Tac(coord_maker(count_j, count_i))
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -62,30 +85,44 @@ while running:
             cursor_pos = event.pos
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
-                print(cursor_pos)
                 if cursor_pos[0] < 200:
                     if cursor_pos[1] < 200:
-                        Tac((100, 100))
+                        if not engaged[0][0] == 1:
+                            engaged[0][0] = 1
+                            Tac((100, 100))
                     elif cursor_pos[1] < 400:
-                        Tac((100,300))
+                        if not engaged[0][1] == 1:
+                            engaged[0][1] = 1
+                            Tac((100,300))
                     else:
-                        Tac((100, 500))
+                        if not engaged[0][2] == 1:
+                            engaged[0][2] = 1
+                            Tac((100, 500))
                 elif cursor_pos[0] < 400:
                     if cursor_pos[1] < 200:
-                       Tac((300, 100))
+                       if not engaged[1][0] == 1:
+                           engaged[1][0] = 1
+                           Tac((300, 100))
                     elif cursor_pos[1] < 400:
-                       Tac((300,300))
+                       if not engaged[1][1] == 1:
+                           engaged[1][1] = 1
+                           Tac((300,300))
                     else:
-                       Tac((300, 500))
+                       if not engaged[1][2] == 1:
+                           engaged[1][2] = 1
+                           Tac((300, 500))
                 else:
                     if cursor_pos[1] < 200:
-                        Tac((500, 100))
+                        if not engaged[2][0] == 1:
+                            engaged[2][0] = 1
+                            Tac((500, 100))
                     elif cursor_pos[1] < 400:
-                        Tac((500,300))
+                        if not engaged[2][1] == 1:
+                            engaged[2][1] = 1
+                            Tac((500,300))
                     else:
-                        Tac((500, 500))
-                
-                
-
+                        if not engaged[2][2] == 1:
+                            engaged[2][2] = 1
+                            Tac((500, 500))
     pygame.display.update()
 
