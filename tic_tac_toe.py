@@ -97,9 +97,11 @@ while running:
         for j in i:
             count_j += 1
             if j == 1:
-                if engaged_type[count_i][count_j] == 1:
+                if engaged_type[count_j][count_i] == 1:
+                    print(engaged_type[count_i][count_j])
                     Tac(coord_maker(count_j, count_i))
                 else:
+                    print('li')
                     Tic(coord_maker(count_j, count_i))
 
     for event in pygame.event.get():
@@ -114,9 +116,9 @@ while running:
                 if not engaged[kostil[0]][kostil[1]] == 1:
                     engaged[kostil[0]][kostil[1]] = 1
                     count += 1
-                    if count % 2 == 0:
-                        engaged_type[kostil[0]][j] = 0
+                    if count % 2 == 1:
+                        engaged_type[kostil[0]][kostil[1]] = 0
                     else:
-                        engaged_type[kostil[0]][j] = 1
+                        engaged_type[kostil[0]][kostil[1]] = 1
              
     pygame.display.update()
