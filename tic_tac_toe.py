@@ -37,6 +37,7 @@ def Tac(coordinates):
     pygame.draw.line(surface=screen,color=(0, 0, 0), start_pos=start_pose_2, end_pos=end_pose_2)
 
 def coord_maker(j, i):
+    """Функция, возвращающая координаты центров фигур на дисплее"""
     print(j, i)
     if   j== 0 and i == 0:
         return (100, 100)
@@ -58,7 +59,8 @@ def coord_maker(j, i):
         return (500, 500)
 
 engaged = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
-count = 1
+engaged_type = engaged
+count = 0
 running = True
 while running:
     screen.fill((210,180,230))
@@ -75,7 +77,10 @@ while running:
         for j in i:
             count_j += 1
             if j == 1:
-                Tac(coord_maker(count_j, count_i))
+                if engaged_type[count_i][count_j] == 1:
+                    Tac(coord_maker(count_j, count_i))
+                else:
+                    Tic(coord_maker(count_j, count_i))
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -89,40 +94,76 @@ while running:
                     if cursor_pos[1] < 200:
                         if not engaged[0][0] == 1:
                             engaged[0][0] = 1
-                            Tac((100, 100))
+                            count += 1
+                            if count % 2 == 0:
+                                engaged_type[0][0] = 0
+                            else:
+                                engaged_type[0][0] = 1
                     elif cursor_pos[1] < 400:
                         if not engaged[0][1] == 1:
                             engaged[0][1] = 1
-                            Tac((100,300))
+                            count += 1
+                            if count % 2 == 0:
+                                engaged_type[0][1] = 0
+                            else:
+                                engaged_type[0][1] = 1
                     else:
                         if not engaged[0][2] == 1:
                             engaged[0][2] = 1
-                            Tac((100, 500))
+                            count += 1
+                            if count % 2 == 0:
+                                engaged_type[0][2] = 0
+                            else:
+                                engaged_type[0][2] = 1
                 elif cursor_pos[0] < 400:
                     if cursor_pos[1] < 200:
                        if not engaged[1][0] == 1:
-                           engaged[1][0] = 1
-                           Tac((300, 100))
+                            count += 1
+                            engaged[1][0] = 1
+                            if count % 2 == 0:
+                                engaged_type[1][0] = 0
+                            else:
+                                engaged_type[1][0] = 1
                     elif cursor_pos[1] < 400:
                        if not engaged[1][1] == 1:
-                           engaged[1][1] = 1
-                           Tac((300,300))
+                            engaged[1][1] = 1
+                            count += 1
+                            if count % 2 == 0:
+                                engaged_type[1][1] = 0
+                            else:
+                                engaged_type[1][1] = 1
                     else:
                        if not engaged[1][2] == 1:
-                           engaged[1][2] = 1
-                           Tac((300, 500))
+                            engaged[1][2] = 1
+                            count += 1
+                            if count % 2 == 0:
+                                engaged_type[1][2] = 0
+                            else:
+                                engaged_type[1][2] = 1
                 else:
                     if cursor_pos[1] < 200:
                         if not engaged[2][0] == 1:
                             engaged[2][0] = 1
-                            Tac((500, 100))
+                            count += 1
+                            if count % 2 == 0:
+                                engaged_type[2][0] = 0
+                            else:
+                                engaged_type[2][0] = 1
                     elif cursor_pos[1] < 400:
                         if not engaged[2][1] == 1:
                             engaged[2][1] = 1
-                            Tac((500,300))
+                            count += 1
+                            if count % 2 == 0:
+                                engaged_type[2][1] = 0
+                            else:
+                                engaged_type[2][1] = 1
                     else:
                         if not engaged[2][2] == 1:
                             engaged[2][2] = 1
-                            Tac((500, 500))
+                            count += 1
+                            if count % 2 == 0:
+                                engaged_type[2][2] = 0
+                            else:
+                                engaged_type[2][2] = 1
     pygame.display.update()
 
