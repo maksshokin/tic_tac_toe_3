@@ -36,9 +36,8 @@ def Tac(coordinates):
     pygame.draw.line(surface=screen,color=(0, 0, 0), start_pos=start_pose_1, end_pos=end_pose_1)
     pygame.draw.line(surface=screen,color=(0, 0, 0), start_pos=start_pose_2, end_pos=end_pose_2)
 
-def coord_maker(j, i):
+def coord_maker(i, j):
     """Функция, возвращающая координаты центров фигур на дисплее"""
-    print(j, i)
     if   j== 0 and i == 0:
         return (100, 100)
     elif j== 0 and i == 1:
@@ -57,11 +56,32 @@ def coord_maker(j, i):
         return (300, 500)
     elif j== 2 and i == 2:
         return (500, 500)
+    
+def cursor_pose(coord):
+    """Возвращает координаты, в зависимости от позиции курсора"""
+    if coord[0] < 200 and coord[1] < 200 :
+        return [0, 0]
+    elif coord[0] < 400 and coord[1] < 200 :
+        return [0, 1]
+    elif coord[0] < 600 and coord[1] < 200 :
+        return [0, 2]
+    elif coord[0] < 200 and coord[1] < 400 :
+        return [1, 0]
+    elif coord[0] < 400 and coord[1] < 400 :
+        return [1, 1]
+    elif coord[0] < 600 and coord[1] < 400 :
+        return [1, 2]
+    elif coord[0] < 200 and coord[1] < 600 :
+        return [2, 0]
+    elif coord[0] < 400 and coord[1] < 600 :
+        return [2, 1]
+    elif coord[0] < 600 and coord[1] < 600 :
+        return [2, 2]
 
 engaged = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
 engaged_type = engaged
-count = 0
 running = True
+count = 0
 while running:
     screen.fill((210,180,230))
     clock.tick(60)
@@ -90,80 +110,13 @@ while running:
             cursor_pos = event.pos
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
-                if cursor_pos[0] < 200:
-                    if cursor_pos[1] < 200:
-                        if not engaged[0][0] == 1:
-                            engaged[0][0] = 1
-                            count += 1
-                            if count % 2 == 0:
-                                engaged_type[0][0] = 0
-                            else:
-                                engaged_type[0][0] = 1
-                    elif cursor_pos[1] < 400:
-                        if not engaged[0][1] == 1:
-                            engaged[0][1] = 1
-                            count += 1
-                            if count % 2 == 0:
-                                engaged_type[0][1] = 0
-                            else:
-                                engaged_type[0][1] = 1
+                kostil = cursor_pose(cursor_pos)
+                if not engaged[kostil[0]][kostil[1]] == 1:
+                    engaged[kostil[0]][kostil[1]] = 1
+                    count += 1
+                    if count % 2 == 0:
+                        engaged_type[kostil[0]][j] = 0
                     else:
-                        if not engaged[0][2] == 1:
-                            engaged[0][2] = 1
-                            count += 1
-                            if count % 2 == 0:
-                                engaged_type[0][2] = 0
-                            else:
-                                engaged_type[0][2] = 1
-                elif cursor_pos[0] < 400:
-                    if cursor_pos[1] < 200:
-                       if not engaged[1][0] == 1:
-                            count += 1
-                            engaged[1][0] = 1
-                            if count % 2 == 0:
-                                engaged_type[1][0] = 0
-                            else:
-                                engaged_type[1][0] = 1
-                    elif cursor_pos[1] < 400:
-                       if not engaged[1][1] == 1:
-                            engaged[1][1] = 1
-                            count += 1
-                            if count % 2 == 0:
-                                engaged_type[1][1] = 0
-                            else:
-                                engaged_type[1][1] = 1
-                    else:
-                       if not engaged[1][2] == 1:
-                            engaged[1][2] = 1
-                            count += 1
-                            if count % 2 == 0:
-                                engaged_type[1][2] = 0
-                            else:
-                                engaged_type[1][2] = 1
-                else:
-                    if cursor_pos[1] < 200:
-                        if not engaged[2][0] == 1:
-                            engaged[2][0] = 1
-                            count += 1
-                            if count % 2 == 0:
-                                engaged_type[2][0] = 0
-                            else:
-                                engaged_type[2][0] = 1
-                    elif cursor_pos[1] < 400:
-                        if not engaged[2][1] == 1:
-                            engaged[2][1] = 1
-                            count += 1
-                            if count % 2 == 0:
-                                engaged_type[2][1] = 0
-                            else:
-                                engaged_type[2][1] = 1
-                    else:
-                        if not engaged[2][2] == 1:
-                            engaged[2][2] = 1
-                            count += 1
-                            if count % 2 == 0:
-                                engaged_type[2][2] = 0
-                            else:
-                                engaged_type[2][2] = 1
+                        engaged_type[kostil[0]][j] = 1
+             
     pygame.display.update()
-
