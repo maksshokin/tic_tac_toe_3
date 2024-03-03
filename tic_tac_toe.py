@@ -79,7 +79,7 @@ def cursor_pose(coord):
         return [2, 2]
 
 engaged = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
-engaged_type = engaged
+engaged_type = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
 running = True
 count = 0
 while running:
@@ -88,8 +88,7 @@ while running:
     screen.blit(line_gorizontal, (0, 200))
     screen.blit(line_gorizontal, (0, 400))
     screen.blit(line_vertical, (200, 0))
-    screen.blit(line_vertical, (400, 0))
-    
+    screen.blit(line_vertical, (400, 0)) 
     count_i = -1
     for i in engaged:
         count_i += 1
@@ -97,12 +96,11 @@ while running:
         for j in i:
             count_j += 1
             if j == 1:
-                if engaged_type[count_j][count_i] == 1:
-                    print(engaged_type[count_i][count_j])
-                    Tac(coord_maker(count_j, count_i))
-                else:
-                    print('li')
+                print(engaged_type[count_i][count_j], count_i, count_j)
+                if engaged_type[count_i][count_j] == 2:
                     Tic(coord_maker(count_j, count_i))
+                if engaged_type[count_i][count_j] == 1:
+                    Tac(coord_maker(count_j, count_i))               
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -113,12 +111,14 @@ while running:
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
                 kostil = cursor_pose(cursor_pos)
-                if not engaged[kostil[0]][kostil[1]] == 1:
+                if not engaged[kostil[0]][kostil[1]] == 1 and not engaged_type[kostil[0]][kostil[1]] != 0:
                     engaged[kostil[0]][kostil[1]] = 1
                     count += 1
-                    if count % 2 == 1:
-                        engaged_type[kostil[0]][kostil[1]] = 0
+                    if count % 2 == 0:
+                        engaged_type[kostil[0]][kostil[1]] = 2
+                        print(engaged_type[kostil[0]][kostil[1]], kostil[0], kostil[1])
                     else:
                         engaged_type[kostil[0]][kostil[1]] = 1
+                        print(engaged_type[kostil[0]][kostil[1]], kostil[0], kostil[1])
              
     pygame.display.update()
